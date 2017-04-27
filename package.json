@@ -1,0 +1,31 @@
+{
+  "name": "Sizzy",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "custom-react-scripts": "0.0.21",
+    "plop": "^1.7.3",
+    "prettier": "^1.2.2"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "lodash": "^4.17.4",
+    "mobx": "^3.1.9",
+    "mobx-react": "^4.1.8",
+    "mobx-router": "^0.0.7",
+    "normalize.css": "^5.0.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-fontawesome": "^1.6.1",
+    "react-frame-component": "^1.0.3",
+    "styled-components": "^1.4.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "deploy": "surge ./build sizzy.surge.sh",
+    "bnd": "npm run build && npm run deploy"
+  }
+}
