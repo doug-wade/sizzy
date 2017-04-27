@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import flex from 'styles/flex';
 import {toolbarHeight} from 'styles/sizes';
 import {colorTransition} from 'styles/shared';
+import {cond} from 'utils/sc-utils';
 
 //external
 import $Icon from "react-fontawesome";
@@ -72,7 +73,12 @@ export const ButtonIcon = styled($Icon)`
   &:hover {
     opacity: 0.7;
   }
+  
+  ${p => cond(p.rotated, `
+    transform: rotate(270deg);
+  `)}
 `;
+
 
 export const Filters = styled.div`
   ${flex.horizontal}

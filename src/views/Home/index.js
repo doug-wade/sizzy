@@ -23,7 +23,7 @@ class HomeComponent extends Component {
 
   render() {
     const { store: { app }, padding, children } = this.props;
-    const { zoom, darkMode, theme, url, isVisible } = app;
+    const { zoom, darkMode, theme, url, isVisible, orientation } = app;
 
     return (
       <ThemeProvider theme={theme}>
@@ -33,6 +33,7 @@ class HomeComponent extends Component {
             <Devices darkMode={darkMode}>
               {map(devices, (device, key) => (
                 <Device
+                  orientation={orientation}
                   visible={isVisible(device)}
                   zoom={zoom}
                   key={key}

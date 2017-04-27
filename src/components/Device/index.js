@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
 import { deviceHeader } from "styles/sizes";
+import ORIENTATIONS from 'config/orientations';
 
 //external
 import Framed from "react-frame-component";
@@ -10,12 +11,10 @@ import Framed from "react-frame-component";
 import { Name, Header, Rotate, Device } from "./styles";
 
 @observer class DeviceComponent extends Component {
-  @observable landscape = this.props.landscape || false;
-  @action toggleLandscape = () => (this.landscape = !this.landscape);
 
   render() {
-    const { landscape } = this;
     const {
+      orientation,
       device: { width, name, height },
       zoom,
       children,
@@ -25,6 +24,7 @@ import { Name, Header, Rotate, Device } from "./styles";
     } = this.props;
 
     //invert values in landscape
+    const landscape = orientation === ORIENTATIONS.LANDSCAPE;
     const iframeHeight = landscape ? width : height;
     const iframeWidth = landscape ? height : width;
 
@@ -60,7 +60,7 @@ import { Name, Header, Rotate, Device } from "./styles";
       <Device style={deviceStyle}>
         <Header>
           <Name> {name} </Name>
-          <Rotate onClick={this.toggleLandscape} name="repeat" />
+          <Rotate name="repeat" />
         </Header>
 
         {url && <iframe src={url} {...frameProps} />}

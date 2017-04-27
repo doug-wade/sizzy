@@ -1,10 +1,11 @@
 import { observable, action, computed } from "mobx";
 import { toggleInArray } from "utils/array-utils";
+import ORIENTATIONS from "config/orientations";
 
 //config
 import themes from "styles/themes";
-import devices  from "config/devices";
-import {OS, DEVICE_TYPES}  from "config/tags";
+import devices from "config/devices";
+import { OS, DEVICE_TYPES } from "config/tags";
 
 //lodash
 import every from "lodash/every";
@@ -15,6 +16,7 @@ class AppStore {
   @observable zoom = 100;
   @observable themeIndex = 1;
   @observable url;
+  @observable orientation = ORIENTATIONS.PORTRAIT;
 
   @observable filters = [
     ...map(DEVICE_TYPES, device => device),
@@ -27,6 +29,13 @@ class AppStore {
 
   @action toggleFilter = filterName => {
     this.filters = toggleInArray(this.filters, filterName);
+  };
+
+  @action toggleOrientation = () => {
+    let newOrientation = this.orientation === ORIENTATIONS.PORTRAIT
+      ? ORIENTATIONS.LANDSCAPE
+      : ORIENTATIONS.PORTRAIT;
+    this.orientation = newOrientation;
   };
 
   @action setZoom = e => (this.zoom = e.target.value);

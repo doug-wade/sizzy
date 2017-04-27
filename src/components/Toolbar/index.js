@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
+import ORIENTATIONS from 'config/orientations';
 
 //styled-components
 import {
@@ -26,7 +27,7 @@ import FilterIcon from "components/FilterIcon";
 class ToolbarComponent extends Component {
   render() {
     const { store: { app } } = this.props;
-    const { filters, zoom } = app;
+    const { filters, zoom, orientation } = app;
 
     return (
       <Toolbar>
@@ -65,7 +66,9 @@ class ToolbarComponent extends Component {
 
         <ToolbarRightSide>
           <ToolbarButtons>
-            <ToolbarButton> <ButtonIcon name="mobile" /> </ToolbarButton>
+            <ToolbarButton onClick={app.toggleOrientation}>
+              <ButtonIcon rotated={orientation === ORIENTATIONS.LANDSCAPE} name="mobile" />
+            </ToolbarButton>
             <ToolbarButton onClick={app.switchTheme}>
               <ButtonIcon name="paint-brush" />
             </ToolbarButton>
