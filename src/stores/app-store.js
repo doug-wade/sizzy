@@ -1,3 +1,6 @@
+// @flow
+import type { InputEvent } from "config/types";
+
 import { observable, action, computed } from "mobx";
 import { toggleInArray } from "utils/array-utils";
 import ORIENTATIONS from "config/orientations";
@@ -13,21 +16,21 @@ import filter from "lodash/filter";
 import map from "lodash/map";
 
 class AppStore {
-  @observable zoom = 100;
-  @observable themeIndex = 1;
-  @observable url;
-  @observable orientation = ORIENTATIONS.PORTRAIT;
+  @observable zoom: number = 100;
+  @observable themeIndex: number = 1;
+  @observable url: string = "https://preactjs.com";
+  @observable orientation: string = ORIENTATIONS.PORTRAIT;
 
-  @observable filters = [
+  @observable filters: Array<string> = [
     ...map(DEVICE_TYPES, device => device),
     ...map(OS, os => os)
   ];
 
   /* Action */
 
-  @action setUrl = e => (this.url = e.target.value);
+  @action setUrl = (e: InputEvent) => (this.url = e.target.value);
 
-  @action toggleFilter = filterName => {
+  @action toggleFilter = (filterName: string) => {
     this.filters = toggleInArray(this.filters, filterName);
   };
 
@@ -38,7 +41,7 @@ class AppStore {
     this.orientation = newOrientation;
   };
 
-  @action setZoom = e => (this.zoom = e.target.value);
+  @action setZoom = (e: InputEvent) => (this.zoom = e.target.value);
 
   //cycle through themes
   @action switchTheme = () => {
@@ -49,20 +52,22 @@ class AppStore {
 
   /* Computed */
 
-  @computed get filteredDevices() {
+  @computed get filteredDeviceNames(): Array<string> {
     let filteredDevices = filter(devices, device =>
       every(device.tags, tag => this.filters.indexOf(tag) !== -1)
     );
     return map(filteredDevices, device => device.name);
   }
 
-  @computed get theme() {
+  @computed get theme(): Object {
     return themes[Object.keys(themes)[this.themeIndex]];
   }
 
   /* Helpers */
 
-  isVisible = device => this.filteredDevices.indexOf(device.name) !== -1;
+  isVisible = (device: Object) => {
+    return this.filteredDeviceNames.indexOf(device.name) !== -1;
+  };
 }
 
 export default AppStore;

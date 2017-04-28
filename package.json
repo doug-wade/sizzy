@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "custom-react-scripts": "0.0.21",
+    "flow-bin": "^0.45.0",
     "plop": "^1.7.3",
     "prettier": "^1.2.2"
   },
@@ -22,10 +23,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "yarn flow && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "surge ./build sizzy.surge.sh",
-    "bnd": "npm run build && npm run deploy"
+    "bnd": "npm run build && npm run deploy",
+    "flow": "flow"
   }
 }

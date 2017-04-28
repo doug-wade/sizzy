@@ -1,0 +1,21 @@
+[ignore]
+.*/node_modules/styled-components/lib/.*
+.*/node_modules/styled-components/src/.*
+.*/node_modules/styled-components/dangerfile.js
+.*/node_modules/react-side-effect/.*
+.*/node_modules/fbjs/.*
+.*/node_modules/draftjs-utils/js/.*
+.*/node_modules/draft-js/lib/.*
+
+[options]
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+esproposal.decorators=ignore
+unsafe.enable_getters_and_setters=true
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src
+module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/__mocks__/file-mock.js'
+module.name_mapper.extension='less' -> '<PROJECT_ROOT>/__mocks__/file-mock.js'
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/__mocks__/file-mock.js'
+module.name_mapper.extension='png' -> '<PROJECT_ROOT>/__mocks__/file-mock.js'
+module.name_mapper.extension='jpg' -> '<PROJECT_ROOT>/__mocks__/file-mock.js'

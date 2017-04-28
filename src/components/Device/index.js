@@ -1,8 +1,9 @@
+// @flow
 import React, { Component } from "react";
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
 import { deviceHeader } from "styles/sizes";
-import ORIENTATIONS from 'config/orientations';
+import ORIENTATIONS from "config/orientations";
 
 //external
 import Framed from "react-frame-component";
@@ -10,12 +11,27 @@ import Framed from "react-frame-component";
 //styled-components
 import { Name, Header, Rotate, Device } from "./styles";
 
+type Props = {
+  device: {
+    width: number,
+    name: string,
+    height: number
+  },
+  orientation: string,
+  zoom: number,
+  children?: React.Element<*>,
+  theme: Object,
+  visible: boolean,
+  url: string
+};
+
 @observer class DeviceComponent extends Component {
+  props: Props;
 
   render() {
     const {
-      orientation,
       device: { width, name, height },
+      orientation,
       zoom,
       children,
       theme,
@@ -29,7 +45,8 @@ import { Name, Header, Rotate, Device } from "./styles";
     const iframeWidth = landscape ? height : width;
 
     const zoomValue = zoom * 0.01;
-    const deviceHeaderTotalHeight = deviceHeader.height + deviceHeader.marginBottom;
+    const deviceHeaderTotalHeight =
+      deviceHeader.height + deviceHeader.marginBottom;
 
     //highly dynamic styles must be inline
     const frameProps = {
@@ -49,9 +66,9 @@ import { Name, Header, Rotate, Device } from "./styles";
 
     const deviceStyle = {
       width: iframeWidth * zoomValue,
-      height: (iframeHeight * zoomValue) + deviceHeaderTotalHeight,
+      height: iframeHeight * zoomValue + deviceHeaderTotalHeight,
       position: "relative",
-      display: visible ? "flex" : "none"
+      display: visible ? "flex" : "none" //hide/show iframe instead of completely destroying it, much faster.
     };
 
     const hasChildren = !url && children;
