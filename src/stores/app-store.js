@@ -50,7 +50,7 @@ class AppStore {
     this.updateAllDevices(this.settings.getValues());
   };
 
-  @action setUrl = (url: stinr) => (this.url = url);
+  @action setUrl = (url: string) => (this.url = url);
 
   @action toggleFilter = (filterName: string) => {
     this.filters = toggleInArray(this.filters, filterName);
