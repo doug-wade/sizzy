@@ -6,7 +6,8 @@
     "custom-react-scripts": "0.0.21",
     "flow-bin": "^0.45.0",
     "plop": "^1.7.3",
-    "prettier": "^1.2.2"
+    "prettier": "^1.2.2",
+    "surge": "^0.19.0"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",
