@@ -1,9 +1,9 @@
 // @flow
 import typeof store from "stores/store";
+import type { InputEvent } from "config/types";
 
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
-import ORIENTATIONS from "config/orientations";
 
 //styled-components
 import {
@@ -50,7 +50,7 @@ class ToolbarComponent extends Component {
         <ToolbarLeft>
           <AppName> Sizzy </AppName>
           <UrlInput
-            onChange={app.setUrl}
+            onChange={(e: InputEvent) => app.setUrl(e.target.value)}
             value={app.url}
             type="text"
             placeholder="Enter URL"
@@ -90,13 +90,13 @@ class ToolbarComponent extends Component {
 
         <ToolbarRightSide>
           <ToolbarButtons>
-              <ToolbarButton
-                disabled={smallZoom}
-                title="Toggle sizes"
-                onClick={app.settings.toggleShowSizes}
-              >
-                <ButtonIcon name="sort-numeric-asc" />
-              </ToolbarButton>
+            <ToolbarButton
+              disabled={smallZoom}
+              title="Toggle sizes"
+              onClick={app.settings.toggleShowSizes}
+            >
+              <ButtonIcon name="sort-numeric-asc" />
+            </ToolbarButton>
             <ToolbarButton
               title="Reset all settings"
               onClick={app.resetAllSettings}

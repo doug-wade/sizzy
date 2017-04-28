@@ -3,6 +3,7 @@ import type { InputEvent, DeviceSettings } from "config/types";
 import { observable, action, computed } from "mobx";
 import { toggleInArray } from "utils/array-utils";
 import allDevices from "config/devices";
+import store from 'stores/store';
 
 //models
 import Settings from "stores/models/settings";
@@ -21,7 +22,7 @@ import map from "lodash/map";
 class AppStore {
   /* Observables */
   @observable themeIndex: number = 1;
-  @observable url: string = "https://preactjs.com";
+  @observable url: string;
   @observable filters: Array<string> = [
     ...map(DEVICE_TYPES, device => device),
     ...map(OS, os => os)
@@ -49,7 +50,7 @@ class AppStore {
     this.updateAllDevices(this.settings.getValues());
   };
 
-  @action setUrl = (e: InputEvent) => (this.url = e.target.value);
+  @action setUrl = (url: stinr) => (this.url = url);
 
   @action toggleFilter = (filterName: string) => {
     this.filters = toggleInArray(this.filters, filterName);
