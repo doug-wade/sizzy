@@ -18,12 +18,12 @@ import {
   AppName,
   Filters,
   ButtonIcon,
-  UrlInput
 } from "./styles";
 import { OS, DEVICE_TYPES } from "config/tags";
 
 //components
 import FilterIcon from "components/FilterIcon";
+import UrlInput from "components/UrlInput";
 
 type Props = {
   store: any | store

@@ -19,7 +19,8 @@
     "react-dom": "^15.4.2",
     "react-fontawesome": "^1.6.1",
     "react-frame-component": "^1.0.3",
-    "styled-components": "^1.4.5"
+    "styled-components": "^1.4.5",
+    "valid-url": "^1.0.9"
   },
   "scripts": {
     "start": "react-scripts start",
