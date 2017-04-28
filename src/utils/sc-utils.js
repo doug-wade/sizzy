@@ -1,3 +1,6 @@
+import {css} from 'styled-components';
+import ORIENTATIONS from 'config/orientations';
+
 export const cond = (condition, rule) => condition ? rule : '';
 
 export const withoutLast = (rule, lastRule) => `
@@ -122,5 +125,11 @@ export const iconSize = (size) => `
   height: ${size}px;
   width: ${size}px;
 `;
+
+export const rotateIconOnOrientationChange = css`
+  ${p => cond(p.orientation === ORIENTATIONS.LANDSCAPE, `
+    transform: rotate(-90deg);
+  `)}
+`
 
 export const smoothScroll = `-webkit-overflow-scrolling: touch;`;

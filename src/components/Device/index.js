@@ -1,4 +1,7 @@
 // @flow
+import Settings from "stores/models/settings";
+import DeviceType from "stores/models/device";
+
 import React, { Component } from "react";
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
@@ -9,16 +12,18 @@ import ORIENTATIONS from "config/orientations";
 import Framed from "react-frame-component";
 
 //styled-components
-import { Name, Header, Rotate, Device } from "./styles";
+import {
+  Name,
+  Header,
+  Button,
+  RotateIcon,
+  Device,
+  Buttons,
+  Size
+} from "./styles";
 
 type Props = {
-  device: {
-    width: number,
-    name: string,
-    height: number
-  },
-  orientation: string,
-  zoom: number,
+  device: DeviceType,
   children?: React.Element<*>,
   theme: Object,
   visible: boolean,
@@ -27,22 +32,23 @@ type Props = {
 
 @observer class DeviceComponent extends Component {
   props: Props;
+  settings: Settings = new Settings();
 
   render() {
     const {
-      device: { width, name, height },
-      orientation,
-      zoom,
+      device: { width, name, height, settings },
       children,
       theme,
       visible,
       url
     } = this.props;
 
+    const { orientation, zoom, showSizes } = settings;
+
     //invert values in landscape
     const landscape = orientation === ORIENTATIONS.LANDSCAPE;
-    const iframeHeight = landscape ? width : height;
-    const iframeWidth = landscape ? height : width;
+    const iframeHeight = (landscape ? width : height) || 0;
+    const iframeWidth = (landscape ? height : width) || 0;
 
     const zoomValue = zoom * 0.01;
     const deviceHeaderTotalHeight =
@@ -54,8 +60,8 @@ type Props = {
         transform: `scale(${zoomValue})`,
         transformOrigin: "top left",
         position: "absolute",
-        top: deviceHeaderTotalHeight,
         border: "none",
+        top: deviceHeaderTotalHeight,
         left: 0,
         borderRadius: 3,
         ...theme.iframeStyle
@@ -72,12 +78,33 @@ type Props = {
     };
 
     const hasChildren = !url && children;
+    const smallZoom = zoom < 50;
+    const showSize = showSizes && !smallZoom;
+
+    const settingsIcon = (
+      <Button onClick={settings.toggleOrientation} title="Settings">
+        <RotateIcon orientation={orientation} name="cog" />
+      </Button>
+    );
 
     return (
       <Device style={deviceStyle}>
         <Header>
-          <Name> {name} </Name>
-          <Rotate name="repeat" />
+          <Buttons>
+            {!smallZoom && settingsIcon}
+            <Button
+              onClick={settings.toggleOrientation}
+              title="Toggle orientation"
+            >
+              <RotateIcon orientation={orientation} name="mobile" />
+            </Button>
+          </Buttons>
+
+          <Name small={smallZoom}> {name} </Name>
+
+          <Size>
+            {showSize ? <span>{width} x {height} </span> : settingsIcon}
+          </Size>
         </Header>
 
         {url && <iframe src={url} {...frameProps} />}

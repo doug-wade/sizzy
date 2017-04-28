@@ -1,9 +1,12 @@
 // @flow
 import type { InputEvent } from "config/types";
-
 import { observable, action, computed } from "mobx";
 import { toggleInArray } from "utils/array-utils";
-import ORIENTATIONS from "config/orientations";
+import allDevices from "config/devices";
+
+//models
+import Settings from "stores/models/settings";
+import Device from "stores/models/device";
 
 //config
 import themes from "styles/themes";
@@ -16,32 +19,40 @@ import filter from "lodash/filter";
 import map from "lodash/map";
 
 class AppStore {
-  @observable zoom: number = 100;
+  /* Observables */
   @observable themeIndex: number = 1;
   @observable url: string = "https://preactjs.com";
-  @observable orientation: string = ORIENTATIONS.PORTRAIT;
-
   @observable filters: Array<string> = [
     ...map(DEVICE_TYPES, device => device),
     ...map(OS, os => os)
   ];
+  settings: Settings = new Settings(true);
 
-  /* Action */
+  /* Props */
+  @observable devices: Array<Device> = map(
+    allDevices,
+    device => new Device(device)
+  );
+
+  /* Actions */
+
+  //update zoom/orientation values of all devices with the global settings
+  @action updateAllDevices = () => {
+    this.devices.forEach(device =>
+      device.settings.update(this.settings.getValues())
+    );
+  };
+
+  @action resetAllSettings = () => {
+    this.settings.reset();
+    this.updateAllDevices();
+  };
 
   @action setUrl = (e: InputEvent) => (this.url = e.target.value);
 
   @action toggleFilter = (filterName: string) => {
     this.filters = toggleInArray(this.filters, filterName);
   };
-
-  @action toggleOrientation = () => {
-    let newOrientation = this.orientation === ORIENTATIONS.PORTRAIT
-      ? ORIENTATIONS.LANDSCAPE
-      : ORIENTATIONS.PORTRAIT;
-    this.orientation = newOrientation;
-  };
-
-  @action setZoom = (e: InputEvent) => (this.zoom = e.target.value);
 
   //cycle through themes
   @action switchTheme = () => {
@@ -65,8 +76,10 @@ class AppStore {
 
   /* Helpers */
 
-  isVisible = (device: Object) => {
-    return this.filteredDeviceNames.indexOf(device.name) !== -1;
+  isVisible = (device: Device) => {
+    return device && device.name
+      ? this.filteredDeviceNames.indexOf(device.name) !== -1
+      : false;
   };
 }
 

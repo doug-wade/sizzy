@@ -1,6 +1,9 @@
+// @flow
+import typeof store from "stores/store";
+
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
-import ORIENTATIONS from 'config/orientations';
+import ORIENTATIONS from "config/orientations";
 
 //styled-components
 import {
@@ -22,41 +25,59 @@ import { OS, DEVICE_TYPES } from "config/tags";
 //components
 import FilterIcon from "components/FilterIcon";
 
+type Props = {
+  store: any | store
+};
 @inject("store")
 @observer
 class ToolbarComponent extends Component {
+  static defaultProps = {
+    store: null
+  };
+
+  props: Props;
+
   render() {
     const { store: { app } } = this.props;
-    const { filters, zoom, orientation } = app;
-
+    const { filters, settings } = app;
+    const { zoom, orientation } = settings;
     return (
       <Toolbar>
 
         <ToolbarLeft>
           <AppName> Sizzy </AppName>
-          <UrlInput onChange={app.setUrl} value={app.url} type="text" placeholder="Enter URL" />
+          <UrlInput
+            onChange={app.setUrl}
+            value={app.url}
+            type="text"
+            placeholder="Enter URL"
+          />
         </ToolbarLeft>
 
         <Filters>
           <FilterIcon
+            title="Toggle Apple devices"
             toggleFilterfn={app.toggleFilter}
             filters={filters}
             toggle={OS.APPLE}
             icon="apple"
           />
           <FilterIcon
+            title="Toggle Android devices"
             toggleFilterfn={app.toggleFilter}
             filters={filters}
             toggle={OS.ANDROID}
             icon="android"
           />
           <FilterIcon
+            title="Toggle mobile devices"
             toggleFilterfn={app.toggleFilter}
             filters={filters}
             toggle={DEVICE_TYPES.PHONE}
             icon="mobile"
           />
           <FilterIcon
+            title="Toggle tablet devices"
             toggleFilterfn={app.toggleFilter}
             filters={filters}
             toggle={DEVICE_TYPES.TABLET}
@@ -66,10 +87,28 @@ class ToolbarComponent extends Component {
 
         <ToolbarRightSide>
           <ToolbarButtons>
-            <ToolbarButton onClick={app.toggleOrientation}>
-              <ButtonIcon rotated={orientation === ORIENTATIONS.LANDSCAPE} name="mobile" />
+            <ToolbarButton
+              title="Toggle sizes"
+              onClick={app.settings.toggleShowSizes}
+            >
+              <ButtonIcon name="sort-numeric-asc" />
             </ToolbarButton>
-            <ToolbarButton onClick={app.switchTheme}>
+            <ToolbarButton
+              title="Reset all settings"
+              onClick={app.resetAllSettings}
+            >
+              <ButtonIcon name="repeat" />
+            </ToolbarButton>
+            <ToolbarButton
+              title="Switch orientation"
+              onClick={app.settings.toggleOrientation}
+            >
+              <ButtonIcon
+                orientation={orientation}
+                name="mobile"
+              />
+            </ToolbarButton>
+            <ToolbarButton title="Switch theme" onClick={app.switchTheme}>
               <ButtonIcon name="paint-brush" />
             </ToolbarButton>
           </ToolbarButtons>
@@ -79,9 +118,9 @@ class ToolbarComponent extends Component {
             <ZoomLevel>({zoom}%)</ZoomLevel>
             <input
               type="range"
-              min="20"
+              min="25"
               max="100"
-              onChange={app.setZoom}
+              onChange={app.settings.setZoom}
               value={zoom}
             />
           </Zoom>

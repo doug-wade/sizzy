@@ -5,7 +5,8 @@ const devices = {
     name: "iPhone 4",
     tags: [DEVICE_TYPES.PHONE, OS.APPLE],
     width: 320,
-    height: 480
+    height: 480,
+    iconName: ''
   },
   iPhone5: {
     name: "iPhone 5",

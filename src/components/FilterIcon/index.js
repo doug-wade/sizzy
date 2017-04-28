@@ -5,10 +5,11 @@ import { FilterIcon } from "./styles";
 
 class FilterIconComponent extends Component {
   render() {
-    const { toggle, icon, toggleFilterfn, filters } = this.props;
+    const { toggle, title, icon, toggleFilterfn, filters } = this.props;
 
     return (
       <FilterIcon
+        title={title}
         onClick={() => toggleFilterfn(toggle)}
         name={icon}
         selected={filters.indexOf(toggle) !== -1}

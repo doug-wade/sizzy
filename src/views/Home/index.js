@@ -3,12 +3,6 @@ import typeof store from "stores/store";
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 
-//lodash
-import map from "lodash/map";
-
-//config
-import devices from "config/devices";
-
 //styled-components
 import { Home, Devices } from "./styles";
 
@@ -31,29 +25,30 @@ class HomeComponent extends Component {
   };
 
   render() {
-    const { store: { app }, children} = this.props;
-    const { zoom, theme, url, isVisible, orientation } = app;
+    const { store: { app }, children } = this.props;
+    const { theme, url, isVisible, settings, devices } = app;
+    const { zoom, orientation } = settings;
 
     return (
-        <Home>
-          <Toolbar />
-          {url &&
-            <Devices>
-              {map(devices, (device, key) => (
-                <Device
-                  key={key}
-                  orientation={orientation}
-                  visible={isVisible(device)}
-                  zoom={zoom}
-                  theme={theme}
-                  url={url}
-                  device={device}
-                >
-                  {children}
-                </Device>
-              ))}
-            </Devices>}
-        </Home>
+      <Home>
+        <Toolbar />
+        {url &&
+          <Devices>
+            {devices.map((device, key) => (
+              <Device
+                key={key}
+                orientation={orientation}
+                visible={isVisible(device)}
+                zoom={zoom}
+                theme={theme}
+                url={url}
+                device={device}
+              >
+                {children}
+              </Device>
+            ))}
+          </Devices>}
+      </Home>
     );
   }
 }
