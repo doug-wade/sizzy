@@ -34,7 +34,7 @@ class ToolbarComponent extends Component {
 
         <ToolbarLeft>
           <AppName> Sizzy </AppName>
-          <UrlInput onChange={app.setUrl} type="text" placeholder="Enter URL" />
+          <UrlInput onChange={app.setUrl} value={app.url} type="text" placeholder="Enter URL" />
         </ToolbarLeft>
 
         <Filters>
