@@ -44,6 +44,7 @@ class AppStore {
   };
 
   @action resetAllSettings = () => {
+    this.themeIndex = 1;
     this.settings.reset();
     this.updateAllDevices();
   };

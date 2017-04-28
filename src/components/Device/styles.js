@@ -2,12 +2,15 @@ import styled from "styled-components";
 import flex from "styles/flex";
 import { deviceHeader } from "styles/sizes";
 import { colorTransition } from "styles/shared";
-import { rotateIconOnOrientationChange } from "utils/sc-utils";
+import { rotateIconOnOrientationChange, whenHovering } from "utils/sc-utils";
+
+//classnames
+export const buttonIconClassname = 'c-device__button-icon';
 
 const sizes = {
   button: {
     size: 25,
-    iconSize: 15
+    iconSize: 18
   }
 };
 
@@ -30,7 +33,7 @@ export const Header = styled.div`
 `;
 
 export const Name = styled.div`
-  font-size: ${p => p.small ? 12 : 15}px;
+  font-size: ${p => (p.small ? 12 : 15)}px;
   font-weight: 400;
   color: ${p => p.theme.color};
   text-align: center;
@@ -49,17 +52,21 @@ export const Button = styled.div`
   cursor: pointer;
   width: ${sizes.button.size}px;
   height: ${sizes.button.size}px;
-  background-color: #c1c1c1;
-  border: 1px solid #ababab;
+  border: 1px solid rgba(255, 255, 255, 0.27);
   border-radius: 4px;
+  transition: all 50ms linear;
   
   &:first-child {
     margin-right: 5px;
   }
   
   &:hover {
-    background-color: gray;
+    border: 1px solid rgba(255, 255, 255, 0.8);
   }
+  
+  ${whenHovering(buttonIconClassname, `
+    color: rgba(255, 255, 255, 0.8);
+  `)}
 `;
 
 export const Size = styled.div`
@@ -70,9 +77,9 @@ export const Size = styled.div`
   flex: 1;
 `;
 
-export const RotateIcon = styled($Icon)`
+export const ButtonIcon = styled($Icon)`
   transition: ${colorTransition};
   ${rotateIconOnOrientationChange};
-  color: white;
+  color: rgba(255,255,255, 0.27);
   font-size: ${sizes.button.iconSize}px !important;
 `;

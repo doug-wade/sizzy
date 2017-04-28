@@ -8,7 +8,8 @@ import { getOppositeOrientation } from "utils/utils";
 
 type DeviceSettings = {
   zoom: number,
-  orientation: string
+  orientation: string,
+  showSizes: boolean
 };
 
 class Settings {

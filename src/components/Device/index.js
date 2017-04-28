@@ -16,10 +16,11 @@ import {
   Name,
   Header,
   Button,
-  RotateIcon,
+  ButtonIcon,
   Device,
   Buttons,
-  Size
+  Size,
+  buttonIconClassname
 } from "./styles";
 
 type Props = {
@@ -81,29 +82,33 @@ type Props = {
     const smallZoom = zoom < 50;
     const showSize = showSizes && !smallZoom;
 
-    const settingsIcon = (
-      <Button onClick={settings.toggleOrientation} title="Settings">
-        <RotateIcon orientation={orientation} name="cog" />
-      </Button>
-    );
-
     return (
       <Device style={deviceStyle}>
         <Header>
           <Buttons>
-            {!smallZoom && settingsIcon}
+            {!smallZoom &&
+              <Button onClick={() => alert('Soon! 🙈')} title="Settings">
+                <ButtonIcon
+                  className={buttonIconClassname}
+                  name="cog"
+                />
+              </Button>}
             <Button
               onClick={settings.toggleOrientation}
               title="Toggle orientation"
             >
-              <RotateIcon orientation={orientation} name="mobile" />
+              <ButtonIcon
+                className={buttonIconClassname}
+                orientation={orientation}
+                name="mobile"
+              />
             </Button>
           </Buttons>
 
           <Name small={smallZoom}> {name} </Name>
 
           <Size>
-            {showSize ? <span>{width} x {height} </span> : settingsIcon}
+            {showSize && <span>{width} x {height} </span>}
           </Size>
         </Header>
 
