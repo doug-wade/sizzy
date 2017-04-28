@@ -10,4 +10,4 @@ $ yarn
 $ yarn start
 ```
 
-The open it in your browser http://localhost:3033/.
+Open it in your browser http://localhost:3033/.
