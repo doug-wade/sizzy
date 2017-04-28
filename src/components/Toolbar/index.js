@@ -41,6 +41,9 @@ class ToolbarComponent extends Component {
     const { store: { app } } = this.props;
     const { filters, settings } = app;
     const { zoom, orientation } = settings;
+
+    const smallZoom = zoom < 50;
+
     return (
       <Toolbar>
 
@@ -87,12 +90,13 @@ class ToolbarComponent extends Component {
 
         <ToolbarRightSide>
           <ToolbarButtons>
-            <ToolbarButton
-              title="Toggle sizes"
-              onClick={app.settings.toggleShowSizes}
-            >
-              <ButtonIcon name="sort-numeric-asc" />
-            </ToolbarButton>
+              <ToolbarButton
+                disabled={smallZoom}
+                title="Toggle sizes"
+                onClick={app.settings.toggleShowSizes}
+              >
+                <ButtonIcon name="sort-numeric-asc" />
+              </ToolbarButton>
             <ToolbarButton
               title="Reset all settings"
               onClick={app.resetAllSettings}
@@ -103,10 +107,7 @@ class ToolbarComponent extends Component {
               title="Switch orientation"
               onClick={app.settings.toggleOrientation}
             >
-              <ButtonIcon
-                orientation={orientation}
-                name="mobile"
-              />
+              <ButtonIcon orientation={orientation} name="mobile" />
             </ToolbarButton>
             <ToolbarButton title="Switch theme" onClick={app.switchTheme}>
               <ButtonIcon name="paint-brush" />

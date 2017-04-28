@@ -1,5 +1,5 @@
 // @flow
-import type { InputEvent } from "config/types";
+import type { InputEvent, DeviceSettings } from "config/types";
 import { observable, action, computed } from "mobx";
 import { toggleInArray } from "utils/array-utils";
 import allDevices from "config/devices";
@@ -37,16 +37,16 @@ class AppStore {
   /* Actions */
 
   //update zoom/orientation values of all devices with the global settings
-  @action updateAllDevices = () => {
+  @action updateAllDevices = (settings: DeviceSettings) => {
     this.devices.forEach(device =>
-      device.settings.update(this.settings.getValues())
+      device.settings.update(settings)
     );
   };
 
   @action resetAllSettings = () => {
     this.themeIndex = 1;
     this.settings.reset();
-    this.updateAllDevices();
+    this.updateAllDevices(this.settings.getValues());
   };
 
   @action setUrl = (e: InputEvent) => (this.url = e.target.value);

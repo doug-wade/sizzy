@@ -4,3 +4,9 @@ export type InputEvent = {
     value: any
   }
 };
+
+export type DeviceSettings = {
+  zoom?: number,
+  orientation?: string,
+  showSizes?: boolean
+};

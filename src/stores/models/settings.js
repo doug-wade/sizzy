@@ -1,16 +1,11 @@
 // @flow
-import type { InputEvent } from "config/types";
+import type { InputEvent, DeviceSettings } from "config/types";
+
 import store from "stores/store";
 
 import { observable, action, computed } from "mobx";
 import ORIENTATIONS from "config/orientations";
 import { getOppositeOrientation } from "utils/utils";
-
-type DeviceSettings = {
-  zoom: number,
-  orientation: string,
-  showSizes: boolean
-};
 
 class Settings {
   constructor(global: ?boolean) {
@@ -30,15 +25,21 @@ class Settings {
   /* Actions */
 
   @action update = ({ zoom, orientation, showSizes }: DeviceSettings) => {
-    this.zoom = zoom;
-    this.orientation = orientation;
-    this.showSizes = showSizes;
+    if (zoom !== undefined) {
+      this.zoom = zoom;
+    }
+    if (orientation !== undefined) {
+      this.orientation = orientation;
+    }
+    if (showSizes !== undefined) {
+      this.showSizes = showSizes;
+    }
   };
 
   //if global zoom/orientation changed, update all devices
-  @action modifyGlobalSettings = () => {
+  @action modifyGlobalSettings = (settings: DeviceSettings) => {
     if (this.global === true) {
-      store.app.updateAllDevices();
+      store.app.updateAllDevices(settings);
     }
   };
 
@@ -49,18 +50,21 @@ class Settings {
   };
 
   @action setZoom = (e: InputEvent) => {
-    this.zoom = e.target.value;
-    this.modifyGlobalSettings();
+    const zoom = e.target.value;
+    this.zoom = zoom;
+    this.modifyGlobalSettings({ zoom });
   };
 
   @action toggleShowSizes = () => {
-    this.showSizes = !this.showSizes;
-    this.modifyGlobalSettings();
+    const showSizes = !this.showSizes;
+    this.showSizes = showSizes;
+    this.modifyGlobalSettings({ showSizes });
   };
 
   @action toggleOrientation = () => {
-    this.orientation = getOppositeOrientation(this.orientation);
-    this.modifyGlobalSettings();
+    const orientation = getOppositeOrientation(this.orientation);
+    this.orientation = orientation;
+    this.modifyGlobalSettings({ orientation });
   };
 
   /* Helpers */

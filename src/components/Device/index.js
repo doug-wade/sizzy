@@ -80,7 +80,7 @@ type Props = {
 
     const hasChildren = !url && children;
     const smallZoom = zoom < 50;
-    const showSize = showSizes && !smallZoom;
+    const showSize = showSizes === true && smallZoom === false;
 
     return (
       <Device style={deviceStyle}>

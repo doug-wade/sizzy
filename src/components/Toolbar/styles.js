@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import flex from 'styles/flex';
-import {toolbarHeight} from 'styles/sizes';
-import {colorTransition} from 'styles/shared';
-import {rotateIconOnOrientationChange} from 'utils/sc-utils';
+import styled from "styled-components";
+import flex from "styles/flex";
+import { toolbarHeight } from "styles/sizes";
+import { colorTransition } from "styles/shared";
+import { rotateIconOnOrientationChange } from "utils/sc-utils";
 
 //external
 import $Icon from "react-fontawesome";
@@ -28,7 +28,7 @@ export const Toolbar = styled.div`
 export const ToolbarButton = styled.button`
  margin-right: 10px;
  min-width: 40px;
- cursor: pointer;
+ cursor: ${p => (p.disabled ? "not-allowed" : "pointer")};
  background: none;
  border: none;
  outline: none;
@@ -38,6 +38,7 @@ export const ToolbarButton = styled.button`
  transition: ${colorTransition};
  padding: 6px 10px;
  font-weight: 100; 
+ opacity: ${p => (p.disabled ? 0.3 : 1)};
  ${p => p.theme.buttonStyle}
 `;
 
@@ -91,7 +92,6 @@ export const UrlInput = styled.input`
   
   ${p => p.theme.urlInputStyle}
 `;
-
 
 export const AppName = styled.div`
   font-size: 25px;
