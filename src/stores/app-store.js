@@ -1,9 +1,8 @@
 // @flow
-import type { InputEvent, DeviceSettings } from "config/types";
+import type { DeviceSettings } from "config/types";
 import { observable, action, computed } from "mobx";
 import { toggleInArray } from "utils/array-utils";
 import allDevices from "config/devices";
-import store from 'stores/store';
 
 //models
 import Settings from "stores/models/settings";
