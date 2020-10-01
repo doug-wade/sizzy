@@ -1,2 +1,2 @@
 ### 📐 Sizzy 
-A tool for developing responsive websites crazy-fast, made by [@thekitze](http://kitze.io)
+A tool for Developing a fast and responsive websites, made by [@thekitze](http://kitze.io)
